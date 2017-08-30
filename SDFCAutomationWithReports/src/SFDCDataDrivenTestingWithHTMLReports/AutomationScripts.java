@@ -390,11 +390,11 @@ public class AutomationScripts extends ReUsableMethods{
 		byVar=objDetails(19);//save all button
 		save=driver.findElement(byVar);
 		clickButton(save, getName(19));
-
+/*
 		enterText(driver.findElement(objDetails(20)), "Hey Everyone", getName(20));
 
 		Thread.sleep(5000);
-		/*enterText(driver.findElement(By.xpath("//*[@id='publishereditablearea']")), "Hello All! How are you!", "'Post' Text Area");
+		enterText(driver.findElement(By.xpath("//*[@id='publishereditablearea']")), "Hello All! How are you!", "'Post' Text Area");
 		clickButton(driver.findElement(By.xpath("//*[@id='publishersharebutton']")), "Share");
 
 		fileLink=driver.findElement(By.xpath("//*[@id='publisherAttachContentPost']/span[1]"));
@@ -464,8 +464,8 @@ public class AutomationScripts extends ReUsableMethods{
 		//work on cropping the image
 
 		save=driver.findElement(By.xpath("//*[@id='j_id0:j_id7:save']"));
-		clickButton(save, "Save");*/
-
+		clickButton(save, "Save");
+*/
 		bw.close();
 		driver.close();
 
