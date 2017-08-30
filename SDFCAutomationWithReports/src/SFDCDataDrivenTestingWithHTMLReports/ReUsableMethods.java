@@ -11,6 +11,7 @@ import java.util.Date;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class ReUsableMethods {
@@ -31,7 +32,7 @@ public class ReUsableMethods {
 	int rowcnt;
 	static String exeStatus = "True";
 	static int iflag = 0;
-	
+
 
 	static String fireFoxBrowser;
 	static String chromeBrowser;
@@ -42,6 +43,123 @@ public class ReUsableMethods {
 	static String dataTablePath;
 	static int i;
 	static String browserName;
+	static HSSFSheet excelsheet;
+	/*
+	 * Name of the method : repoRead
+	 * Brief Description : To read the object repository
+	 * Arguments : path -> path of the test data document, sheet -> sheet name of the test data
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void repoRead(String path,String sheet) throws IOException
+	{
+		File file = new File(path);
+		FileInputStream fis = new FileInputStream(file);
+		HSSFWorkbook workbook = new HSSFWorkbook(fis);
+		excelsheet = workbook.getSheet(sheet);
+
+	}
+	/*
+	 * Name of the method : getName
+	 * Brief Description : To fetch the name of the object
+	 * Arguments : row --> row number of the object
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static String getName(int row)
+	{
+		String name=excelsheet.getRow(row).getCell(0).getStringCellValue();
+		return name;
+	}
+
+
+	/*
+	 * Name of the method : getLocType
+	 * Brief Description : To fetch the locator type of the object
+	 * Arguments : row --> row number of the object
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static String getLocType(int row)
+	{
+		String type=excelsheet.getRow(row).getCell(1).getStringCellValue();
+		return type;
+	}
+
+
+	/*
+	 * Name of the method : getLocValue
+	 * Brief Description : To fetch the locator value of the object
+	 * Arguments : row --> row number of the object
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static String getLocValue(int row)
+	{
+		String val=excelsheet.getRow(row).getCell(2).getStringCellValue();
+		return val;
+	}
+
+
+	/*
+	 * Name of the method : getBy
+	 * Brief Description : To get the locator type phrase
+	 * Arguments : type --> locator type, value --> locator value
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+
+	public static By getBy(String type, String value)
+	{
+
+		switch (type)
+		{
+		case "id":
+			return By.id(value);
+		case "xpath":
+			return By.xpath(value);
+		case "className":
+			return By.className(value);
+		case "name":
+			return By.name(value);
+		case "linkText":
+			return By.linkText(value);
+		case "partialLinkText":
+			return By.partialLinkText(value);
+		case "cssSelector":
+			return By.cssSelector(value);
+		case "tagName":
+			return By.tagName(value);
+		default:
+			System.out.println("Unknown type");
+			return null;
+
+		}
+	}
+
+	/*
+	 * Name of the method : objDetails
+	 * Brief Description : To get the details of the object
+	 * Arguments : row --> row number of the object 
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+
+	public static By objDetails(int row)
+	{
+
+		String locatortype = getLocType(row);
+		String locvalue = getLocValue(row);
+		By temp=getBy(locatortype,locvalue);
+		return temp;
+
+	}
 
 	/*
 	 * Name of the method : startReport
@@ -112,7 +230,7 @@ public class ReUsableMethods {
 		Date exec_time = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		str_time = dateFormat.format(exec_time);
-		
+
 		if (Res_type.startsWith("Pass")) {
 			bw.write("<TR COLS=7><TD BGCOLOR=#EEEEEE WIDTH=3%><FONT FACE=VERDANA SIZE=2>"
 					+ (j++)
@@ -173,6 +291,8 @@ public class ReUsableMethods {
 			}
 		}
 
+
+		fis.close();
 		return temp;
 	}
 
@@ -184,7 +304,7 @@ public class ReUsableMethods {
 	 * Creation Date : August 28, 2017
 	 * Last Modified : August 28, 2017
 	 */
-	
+
 	public static void enterText(WebElement elt, String input, String objName) throws IOException
 	{
 		if(elt.isDisplayed())
@@ -197,7 +317,7 @@ public class ReUsableMethods {
 			Update_Report("Fail", ("Enter input --> "+objName), ("Enter input Action has failed"));
 		}
 	}
-	
+
 	/*
 	 * Name of the method : clickButton
 	 * Brief Description : To click a button
@@ -217,5 +337,50 @@ public class ReUsableMethods {
 		}
 
 	}
+
+	/*
+	 * Name of the method : validateErrMsg
+	 * Brief Description : To validate the generated error message against the expected result
+	 * Arguments : expectedResult -> The expected error message , testResult -> The generated error message
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+
+
+	public static void validateErrMsg(String expectedResult, String testResult) throws IOException {
+		// TODO Auto-generated method stub
+		if (expectedResult.equals(testResult))
+
+		{
+			Update_Report("Pass", "Validation",( "The error message generated '"+testResult+"' matches with the expected result . Test Case Passed."));
+		} else
+			Update_Report("Fail", "Validation",( "The error message generated '"+testResult+"' matched with the expected result. Test Case Failed."));
+
+
+	}
+
+
+
+	/*
+	 * Name of the method : validateTestResult
+	 * Brief Description : To validate the generated test result against the expected result
+	 * Arguments : expectedResult -> The expected error message , testResult -> The generated error message
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void validateTestResult(String expectedResult, String testResult) throws IOException {
+		// TODO Auto-generated method stub
+		if (expectedResult.equals(testResult))
+
+		{
+			Update_Report("Pass", "Validation",( "The test result generated '"+testResult+"' matches with the expected result . Test Case Passed."));
+		} else
+			Update_Report("Fail", "Validation",( "The test result generated '"+testResult+"' matched with the expected result. Test Case Failed."));
+
+
+	}
+
 
 }
