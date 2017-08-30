@@ -868,6 +868,211 @@ public class AutomationScripts extends ReUsableMethods{
 	}
 	
 	/*
+	 * Name of the method : testCase15
+	 * Brief Description : Opportunity Tab
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void testCase15() throws IOException, InterruptedException
+	{
+		startReport("Test Case 15","C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Html Reports/");
+		String filepath = "C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Test Case 15.xls";
+		String sheetname = "Sheet1";
+
+		String[][] exceldata = inputRead(filepath, sheetname);
+		String url = exceldata[1][1];
+		String username = exceldata[1][2];
+		String password = exceldata[1][3];
+		String[] alloptions=exceldata[1][4].split(", ");
+		
+		
+		initializeDriver(url);
+
+		WebElement uname, pwd, login;
+
+		uname = driver.findElement(By.id("username"));
+		enterText(uname, username, "Username");
+
+		pwd = driver.findElement(By.id("password"));
+		enterText(pwd, password, "Password");
+
+		login = driver.findElement(By.id("Login"));
+		clickButton(login, "Login");
+
+		clickButton(driver.findElement(By.xpath("//*[@id='Opportunity_Tab']")), "Opportunity Tab");
+		
+
+		Thread.sleep(3000);
+		
+		Select sel=new Select(driver.findElement(By.xpath("//*[@id='fcf']")));
+		
+		List<WebElement> al=sel.getOptions();
+		
+		int count=al.size();
+		ArrayList<String> opts=new ArrayList<String>();
+		
+		for(int i=0;i<count;i++)
+		{
+			opts.add(al.get(i).getText());
+			validateTestResult(alloptions[i], opts.get(i));
+		}
+		
+		bw.close();
+		driver.close();
+	}
+	
+	/*
+	 * Name of the method : testCase16
+	 * Brief Description : Create new opportunity
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void testCase16() throws IOException, InterruptedException
+	{
+		startReport("Test Case 16","C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Html Reports/");
+		String filepath = "C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Test Case 16.xls";
+		String sheetname = "Sheet1";
+
+		String[][] exceldata = inputRead(filepath, sheetname);
+		String url = exceldata[1][1];
+		String username = exceldata[1][2];
+		String password = exceldata[1][3];
+		String opporname=exceldata[1][4];
+		String accname=exceldata[1][5];
+		String probability= exceldata[1][6];
+		
+		initializeDriver(url);
+
+		WebElement uname, pwd, login;
+
+		uname = driver.findElement(By.id("username"));
+		enterText(uname, username, "Username");
+
+		pwd = driver.findElement(By.id("password"));
+		enterText(pwd, password, "Password");
+
+		login = driver.findElement(By.id("Login"));
+		clickButton(login, "Login");
+
+		clickButton(driver.findElement(By.xpath("//*[@id='Opportunity_Tab']")), "Opportunity Tab");
+		
+		Thread.sleep(1000);
+		clickButton(driver.findElement(By.xpath("//*[@id='hotlist']/table/tbody/tr/td[2]/input")), "New");
+		enterText(driver.findElement(By.xpath("//*[@id='opp3']")), opporname, "Opportunity Name");
+		enterText(driver.findElement(By.xpath("//*[@id='opp4']")), accname, "Account Name");
+		clickButton(driver.findElement(By.xpath("//*[@id='ep']/div[2]/div[3]/table/tbody/tr[2]/td[4]/div/span/span/a")), "Close Date");
+		
+		Select stage=new Select(driver.findElement(By.xpath("//*[@id='opp11']")));
+		stage.selectByValue("Prospecting");
+		
+		enterText(driver.findElement(By.xpath("//*[@id='opp12']")), probability, "Probability");
+		
+		Select source=new Select(driver.findElement(By.xpath("//*[@id='opp6']")));
+		source.selectByValue("Partner Referral");
+		
+		clickButton(driver.findElement(By.xpath("//*[@id='topButtonRow']/input[1]")), "Save");
+		
+		if((driver.findElement(By.xpath("//*[@id='bodyCell']/div[1]/div[1]/div[1]/h2")).getText().equals(opporname)))
+			Update_Report("Pass", "Create opportunity", "Opportunity created");
+		else
+			Update_Report("Fail", "Creare opportunity", "Opportunity not created");
+		Thread.sleep(3000);
+		
+		bw.close();
+		driver.close();
+		
+	}
+	
+	/*
+	 * Name of the method : testCase17
+	 * Brief Description : Opportunity Pipeline
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void testCase17() throws IOException, InterruptedException
+	{
+		startReport("Test Case 17","C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Html Reports/");
+		String filepath = "C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Test Case 17.xls";
+		String sheetname = "Sheet1";
+
+		String[][] exceldata = inputRead(filepath, sheetname);
+		String url = exceldata[1][1];
+		String username = exceldata[1][2];
+		String password = exceldata[1][3];
+		
+		initializeDriver(url);
+
+		WebElement uname, pwd, login;
+
+		uname = driver.findElement(By.id("username"));
+		enterText(uname, username, "Username");
+
+		pwd = driver.findElement(By.id("password"));
+		enterText(pwd, password, "Password");
+
+		login = driver.findElement(By.id("Login"));
+		clickButton(login, "Login");
+
+		clickButton(driver.findElement(By.xpath("//*[@id='Opportunity_Tab']/a")), "Opportunity Tab");
+	
+		clickButton(driver.findElement(By.xpath("//*[@id='toolsContent']/tbody/tr/td[1]/div/div[1]/div[1]/ul/li[1]/a")), "Opportunities Pipeline");
+		if((driver.findElement(By.xpath("//*[@id='noTableContainer']/div/div[1]/div[1]/div[1]/h1")).getText().equals("Opportunity Pipeline")))
+			Update_Report("Pass", "Opportunity Pipeline Link", "Report of Opportunity Pipelined is opened");
+		else
+			Update_Report("Fail", "Opportunity Pipeline Link", "Report of Opportunity Pipelined is not opened");
+		
+		bw.close();
+		driver.close();
+	}
+	
+	/*
+	 * Name of the method : testCase18
+	 * Brief Description : Stuck Opportunities
+	 * Created By : Roshini Padma Sendhil Kumar
+	 * Creation Date : August 28, 2017
+	 * Last Modified : August 28, 2017
+	 */
+	public static void testCase18() throws IOException, InterruptedException
+	{
+		startReport("Test Case 18","C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Html Reports/");
+		String filepath = "C:/Users/Zara/Documents/Roshini/Selenium Training/selenium automation/SFDC Data Driven Testing/Test Case 18.xls";
+		String sheetname = "Sheet1";
+
+		String[][] exceldata = inputRead(filepath, sheetname);
+		String url = exceldata[1][1];
+		String username = exceldata[1][2];
+		String password = exceldata[1][3];
+		
+		initializeDriver(url);
+
+		WebElement uname, pwd, login;
+
+		uname = driver.findElement(By.id("username"));
+		enterText(uname, username, "Username");
+
+		pwd = driver.findElement(By.id("password"));
+		enterText(pwd, password, "Password");
+
+		login = driver.findElement(By.id("Login"));
+		clickButton(login, "Login");
+
+		clickButton(driver.findElement(By.xpath("//*[@id='Opportunity_Tab']/a")), "Opportunity Tab");
+	
+		clickButton(driver.findElement(By.xpath("//*[@id='toolsContent']/tbody/tr/td[1]/div/div[1]/div[1]/ul/li[2]/a")), "Stuck Opportunities");
+		if((driver.findElement(By.xpath("//*[@id='noTableContainer']/div/div[1]/div[1]/div[1]/h1")).getText().equals("Stuck Opportunities")))
+			Update_Report("Pass", "Stuck Opportunities Link", "Report of Stuck Opportunities is opened");
+		else
+			Update_Report("Fail", "Stuck Opportunities Link", "Report of Stuck Opportunities is not opened");
+		
+		bw.close();
+		driver.close();
+	}
+		
+	
+	/*
 	 * Name of the method : validateErrMsg
 	 * Brief Description : To validate the generated error message against the expected result
 	 * Arguments : expectedResult -> The expected error message , testResult -> The generated error message

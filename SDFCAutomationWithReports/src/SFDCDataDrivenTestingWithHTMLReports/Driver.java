@@ -22,8 +22,12 @@ public class Driver {
 		AutomationScripts.testCase11();
 		AutomationScripts.testCase12();
 		AutomationScripts.testCase13();
-		AutomationScripts.testCase14(); //Work in Progress
+		//AutomationScripts.testCase14(); //Work in Progress
 		
+		AutomationScripts.testCase15();
+		AutomationScripts.testCase16();
+		AutomationScripts.testCase17();
+		AutomationScripts.testCase18();
 	}
 	
 	
