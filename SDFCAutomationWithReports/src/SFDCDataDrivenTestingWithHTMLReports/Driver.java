@@ -14,16 +14,15 @@ public class Driver {
 		AutomationScripts.testCase4B();
 		AutomationScripts.testCase5();
 
-		// AutomationScripts.testCase6(); //Work in Progress
-		// AutomationScripts.testCase7(); //Work in Progress
+		AutomationScripts.testCase6();
+		AutomationScripts.testCase7();
 
 		AutomationScripts.testCase8();
 		AutomationScripts.testCase9();
 		AutomationScripts.testCase10();
 		AutomationScripts.testCase11();
-		// AutomationScripts.testCase12(); //Work in progress
+		AutomationScripts.testCase12();
 		AutomationScripts.testCase13();
-		// AutomationScripts.testCase14(); //Work in Progress
 
 		AutomationScripts.testCase15();
 		AutomationScripts.testCase16();
@@ -49,9 +48,8 @@ public class Driver {
 
 		AutomationScripts.testCase32();
 		AutomationScripts.testCase33();
-		// AutomationScripts.testCase34(); //Work in progress
+
 		AutomationScripts.testCase35();
-		// AutomationScripts.testCase36();//Work in progress
 
 	}
 

@@ -333,7 +333,7 @@ public class ReUsableMethods {
 			elt.click();
 			Update_Report("Pass", ("Click --> "+objName), (objName+" is clicked "));
 		}else{
-			Update_Report("Pass", ("Click --> "+objName), (objName+" is not clicked "));
+			Update_Report("Fail", ("Click --> "+objName), (objName+" is not clicked "));
 		}
 
 	}
